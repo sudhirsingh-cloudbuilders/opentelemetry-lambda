@@ -105,14 +105,11 @@ async function initializeProvider() {
   }
 
   const tracerProvider = new NodeTracerProvider(config);
-  if (typeof configureTracerProvider === 'function') {
-    configureTracerProvider(tracerProvider)
-  } else {
-    // defaults
-    tracerProvider.addSpanProcessor(
+  // defaults
+  tracerProvider.addSpanProcessor(
       new BatchSpanProcessor(new OTLPTraceExporter())
     );
-  }
+  
   // logging for debug
   if (logLevel === DiagLogLevel.DEBUG) {
     tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
